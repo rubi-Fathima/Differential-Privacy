@@ -1,0 +1,122 @@
+{% extends "diffPrivLayout.html" %}
+{% block content %}
+
+
+<style type="text/css">
+	.material-icons {
+		font-size: 100px;
+	}
+</style>
+
+
+
+<div class="shadow p-3 m-4 bg-white rounded">
+	<h2>What is Differential Privacy?</h2>
+	<p>As the world progresses, we see huge amounts of data being collected by companies. They use this to improve upon their prodicts and services, and might not directly have any malicious purpose behind collecting user data. But this can not be promised once the companies get this data, as they have no accountability directly with the users.</p><p> But there is a way around this issue and benifit both parties, the user and the companies. This is where the concept of Differential Privacy steps in. The concept is to special libraries that manipulate a small sample of the data, or slightly change it's distribution. This adds an uncertainity as to the authenticity of individual datatapoints, while keeping the overall data distribution as close as possible.</p>
+</div>
+
+
+
+
+
+<div class="shadow p-3 m-4 bg-white rounded">
+	<h2>Account Setup</h2>
+	<div class="container">
+		<div class="row">
+			<div class="col-8">
+				<p>
+					Setup a temporary session account, which includes setting the budget accountant required for the specialized differential privacy library and uploading the dataset sued throughout the seesion.
+				</p>
+			</div>
+			<div class="col-4">
+				<div class="container" align="center">
+					<div class="row">
+						<span class="material-icons">manage_accounts</span>						
+					</div>
+
+					<div class="row">
+						<a href="/setAccountant">
+							<button class="btn btn-primary">Account Setup</button>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="shadow p-3 m-4 bg-white rounded">
+	<h2>Data Summarizer</h2>
+	<div class="container">
+		<div class="row">
+			<div class="col-8">
+				<p>
+					Observe a comparitive report of data summarizing functions between the non-private/normal method and the special private methods. These are ran on the dataset uploaded.
+				</p>
+			</div>
+			<div class="col-4">
+				<div class="container" align="center">
+					<div class="row">
+						<span class="material-icons">table_chart</span>						
+					</div>
+
+					<div class="row">
+						<a href="/aggregationToolsPage">
+							<button class="btn btn-primary">Summarization Tool</button>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="shadow p-3 m-4 bg-white rounded">
+	<h2>Visualizations</h2>
+	<div class="container">
+		<div class="row">
+			<div class="col-8">
+				<p>
+					Generate and view histogram visualizations of both non-private/normal method and the special private methods for all columns of a given dataset.
+				</p>
+			</div>
+			<div class="col-4">
+				<div class="container" align="center">
+					<div class="row">
+						<span class="material-icons">insert_chart_outlined</span>						
+					</div>
+
+					<div class="row">
+						<a href="/visualizationPage">
+							<button class="btn btn-primary">Visualizations</button>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="shadow p-3 m-4 bg-white rounded">
+	<h2>Train ML Models</h2>
+	<div class="container">
+		<div class="row">
+			<div class="col-8">Apply machine learning principles on the dataset to train model and obtain a comparitive report of the performance of non-private/normal and the special private ML models.</div>
+
+			<div class="col-4">
+				<div class="container" align="center">
+					<div class="row">
+						<span class="material-icons">engineering</span>
+					</div>
+
+					<div class="row">
+						<a href="/modelSelection">
+							<button class="btn btn-primary">Train models</button>
+						</a>
+					</div>
+				</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

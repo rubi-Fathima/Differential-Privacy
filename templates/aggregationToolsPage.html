@@ -1,0 +1,97 @@
+{% extends "diffPrivLayout.html" %}
+{% block content %}
+
+
+<style type="text/css">
+	.aggregation {
+		margin-bottom: 10%;
+	}
+</style>	
+
+
+
+	<div class="aggregation">
+		<h1>Non Zero Count</h1>
+		<p>This shows the number of non-zero elements for each column in the dataset. This clearly shows the change in the distribution of the data of select columns of the dataset involved in the differential private methods.</p>
+		<table class="table table-bordered table-hover">
+			<thead class="table-dark">
+				<tr>
+					<th>Columns</th>
+					<th>Non Private</th>
+					<th>Private</th>
+				</tr>
+			</thead>
+			{%for i in aggDict%}
+				<tr>
+					<td>{{i}}</td>
+					<td>{{aggDict[i]["nonZero"]["nonPrivate"]}}</td>
+					<td>{{aggDict[i]["nonZero"]["private"]}}</td>
+				</tr>
+			{%endfor%}			
+		</table>
+	</div>
+
+	<div class="aggregation">
+		<h1>Mean</h1>
+		<p>This shows the comparitive change in mean values of different columns between the non-private/normal method and it's differentially private counterpart.</p>
+		<table class="table table-bordered table-hover">
+			<thead class="table-dark">
+			<tr>
+				<th>Columns</th>
+				<th>Non Private</th>
+				<th>Private</th>
+			</tr>
+			</thead>
+			{%for i in aggDict%}
+				<tr>
+					<td>{{i}}</td>
+					<td>{{aggDict[i]["mean"]["nonPrivate"]}}</td>
+					<td>{{aggDict[i]["mean"]["private"]}}</td>
+				</tr>
+			{%endfor%}			
+		</table>
+	</div>
+
+	<div class="aggregation">
+		<h1>Variance</h1>
+		<p>This shows the comparitive change in variabce values of different columns between the non-private/normal method and it's differentially private counterpart.</p>
+		<table class="table table-bordered table-hover">
+			<thead class="table-dark">
+			<tr>
+				<th>Columns</th>
+				<th>Non Private</th>
+				<th>Private</th>
+			</tr>
+			</thead>
+			{%for i in aggDict%}
+				<tr>
+					<td>{{i}}</td>
+					<td>{{aggDict[i]["var"]["nonPrivate"]}}</td>
+					<td>{{aggDict[i]["var"]["private"]}}</td>
+				</tr>
+			{%endfor%}			
+		</table>
+	</div>
+
+	<div class="aggregation">
+		<h1>Standard Deviation</h1>
+		<p>This shows the comparitive change in standard deviation values of different columns between the non-private/normal method and it's differentially private counterpart.</p>
+		<table class="table table-bordered table-hover">
+			<thead class="table-dark">
+			<tr>
+				<th>Columns</th>
+				<th>Non Private</th>
+				<th>Private</th>
+			</tr>
+			</thead>
+			{%for i in aggDict%}
+				<tr>
+					<td>{{i}}</td>
+					<td>{{aggDict[i]["std"]["nonPrivate"]}}</td>
+					<td>{{aggDict[i]["std"]["private"]}}</td>
+				</tr>
+			{%endfor%}			
+		</table>
+	</div>
+
+{% endblock %}

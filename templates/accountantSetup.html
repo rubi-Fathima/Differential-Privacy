@@ -1,0 +1,206 @@
+{% extends "diffPrivLayout.html" %}
+{% block content %}
+	
+	<div class="shadow p-3 mb-5 bg-white rounded" align="center">
+	    <div class="drop_box">
+	        <header>
+	            <h4>Setup a Budget Accountant</h4>
+	        </header>
+	        <!-- <form method="POST", action="/accountantSetupCompletion" enctype="multipart/form-data"> -->
+	        	<!-- <div class="form-group"> -->
+	        	<table class="table" style="width: 50%;">
+	        		<tr>
+	        			<td>
+	        				<input class="form-control" id="accountantNameInput" type="text" name="accountantName" placeholder="Accountant Name" 	required>
+	        			</td>
+	        			<td>
+	        				<input class="form-control" id="epsilonValueInput" type="number" name="epsilonValue" placeholder="Epsilon" required>
+	        			</td>
+	        		</tr>
+	        	</table>
+	        	<!-- <input id="deltaValueInput" type="number" name="deltaValue" placeholder="Delta" required> -->
+	        	<!-- </div> -->
+	        <!-- </form> -->
+	        <p class="mt-5">The <strong>Budget Accountant</strong> is responsible for keeping track of a computation resources used on a dataset. This is done to ensure a particular dataset is not being overly used, which would pave way to dta security breaches. The <strong>Epsilon (&Epsilon;)</strong> value roughly depicts the amount of computation resources available to use. For every use: Visualizations, Data Summarizer tool or training ML Models on the dataset, onse can observe the decrease in value of Epsilon. If there are not enough Epsilon points to perform an operation, the user gets a warning.</p>
+	    </div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<script type="text/javascript">
+		
+
+		function completeForm(){
+			createdForm = $("#createdForm");
+			accountantName = $("#accountantNameInput");
+			epsilonValue = $("#epsilonValueInput");
+			// deltaValue = $("#deltaValueInput");
+
+			// console.log(epsilonValue);
+			// console.log(deltaValue);
+			
+
+			createdForm.append(accountantName);
+			createdForm.append(epsilonValue);
+			// createdForm.append(deltaValue);
+
+			accountantName.hide();
+			epsilonValue.hide();
+			// deltaValue.hide();
+
+			// createdForm.append(epsilonValue);
+			
+			// console.log(createdForm);
+		}
+
+
+
+		function createForm(data){
+			form = document.createElement("form");
+			form.method = "POST";
+			form.action = "/accountSetupCompletion";
+			form.id="createdForm";
+
+			var editColumnsTableDiv = createEditColumnsTable(data);
+
+			var submitButton = document.createElement("button");
+			submitButton.type = "submit";
+			submitButton.innerHTML = "Upload";
+			submitButton.classList.add("btn");
+			submitButton.classList.add("btn-primary");
+			submitButton.onclick = function() { completeForm(); };
+
+			form.appendChild(editColumnsTableDiv);
+			form.appendChild(submitButton);
+
+			$("#previewContent").append(form);
+		}
+
+
+
+		function createEditColumnsTable(data){
+			editColumnsTableDiv = document.createElement("div");
+			editColumnsTable = document.createElement("table");
+			editColumnsTable.style.width = "70%";
+			editColumnsTable.classList.add("table");
+			editColumnsTable.classList.add("table-bordered");
+			editColumnsTable.classList.add("table-hover");
+			editColumnsTableHeader = document.createElement("thead");
+			editColumnsTableHeader.classList.add("thead-dark");
+			editColumnsTableHeader.innerHTML = `<tr>
+													<th>Column Name</th>
+													<th>Mask/Remove</th>
+												</tr>`;
+			editColumnsTable.appendChild(editColumnsTableHeader);
+
+			for (var i = data.length - 1; i >= 0; i--) {
+				trEle = document.createElement("tr");
+
+				tdEle = document.createElement("td");
+				columnName = document.createElement("span");
+				// checkboxLabel.for = "checkboxOption---"+data[i];
+				columnName.innerHTML = data[i];
+				tdEle.appendChild(columnName);
+				trEle.appendChild(tdEle);
+
+
+				tdEle = document.createElement("td");
+				var checkbox = document.createElement("input");
+				checkbox.type = "checkbox";
+				checkbox.name = "editColumn---"+data[i];
+				checkbox.value = data[i];
+				checkbox.classList.add("form-check-input");
+				tdEle.appendChild(checkbox);
+				trEle.appendChild(tdEle);
+				editColumnsTable.appendChild(trEle);
+			}
+
+			editColumnsHeading = document.createElement("h1");
+			editColumnsHeading.innerHTML = "Select columns to remove";
+			editColumnsTableDiv.appendChild(editColumnsHeading);
+			editColumnsTableDiv.appendChild(editColumnsTable);
+			return editColumnsTableDiv
+		}
+
+
+		$(function() {
+		    $('#fileUpload').change(function() {
+		    	previewEmpty = $("#previewEmpty");
+				previewLoading = $("#previewLoading");
+				previewContent = $("#previewContent");
+
+				previewEmpty.hide();
+				previewLoading.show();
+				previewContent.hide();
+
+				previewContent.html(`<div id="previewTable"></div>	`);
+		        var form_data = new FormData($('#fileUpload')[0]);
+		        $.ajax({
+		            type: 'POST',
+		            url: '/getDatasetInfo',
+		            data: form_data,
+		            contentType: false,
+		            cache: false,
+		            processData: false,
+		            success: function(data) {
+		            	previewEmpty.hide();
+						previewLoading.hide();
+						previewContent.show();
+		                console.log('Success!');
+		                console.log(data);
+		                $("#previewTable").html(data["table"]);
+		                // createEditColumnsTable(data["columnNames"]);
+		                createForm(data["columnNames"]);
+		            },
+		        });
+		    });
+		});
+
+
+
+	</script>
+	
+	<div class="shadow p-3 mb-5 bg-white rounded" align="center">
+	    <div class="drop_box">
+	        <header>
+	            <h4>Select the Dataset</h4>
+	        </header>
+	        <p>Files Supported: CSV only</p>
+	        <form method="POST", action="/extractData" enctype="multipart/form-data" id="fileUpload">
+	        	<!-- <div class="form-group"> -->
+	        		<div class="form-group mb-3">
+					    <input type="file" accept=".csv" id="csvFile" name="csvFile" required class="form-control" id="fileInput" style="width: 50%">
+					</div>
+					<p class="mt-5">This application assumes the dataset provided as input is <strong>completely cleaned</strong>, along with the necessary changes or encoding required for categorical as well as numerical columns. To reiterate the point, it is the user's responsibility to make sure the data is clean. <strong>No string/characters are allowed, all categorical columns must be encoded to numeric values prior to uploading.</strong> If the dataset is not fit to be used for any of the functions involved, the user gets a warning.</p>
+	        		<!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+	        	<!-- </div> -->
+	        </form>
+	    </div>
+	</div>
+
+
+	<div id="datasetDiv" class="shadow p-3 mb-5 bg-white rounded" align="center">
+		<h2>Dataset preview</h2>
+		<div id="previewEmpty">Upload dataset first</div>
+		<div  id="previewLoading" class="spinner-border" role="status" style="display: none;"></div>
+		<div id="previewContent" style="display: none;">
+			<div id="previewTable"></div>
+		</div>
+		
+	</div>
+
+
+{% endblock %}

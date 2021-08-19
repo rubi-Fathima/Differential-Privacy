@@ -1,0 +1,69 @@
+{% extends "diffPrivLayout.html" %}
+{% block content %}
+	
+
+	<style type="text/css">
+		.col {
+			margin: 10px;
+		}
+	</style>
+
+
+
+	<div class="shadow p-3 mb-5 bg-white rounded" align="center" style="width: 50%; margin: auto;">
+		<form method="POST" action="/runModel">
+			<div class="container" align="center">		
+				<div class="row">
+					<div class="col">
+						<label for="modelNameID">Choose Model</label>
+					</div>
+					<div class="col">
+						<select name="modelName" id="modelNameID" class="form-control">
+							<option value="gaussianNB">Gaussian Naive Bayes</option>
+							<option value="logisticReg">Logistic Regression</option>
+							<option value="linearReg">Linear Regression</option>				
+						</select>
+					</div>
+				</div>
+				<div class="row ">
+					<div class="col">
+						<label for="yColumnID">Choose the target column</label>
+					</div>
+					<div class="col">
+						<select name="yColumn" id="yColumnID" class="form-control">
+							{%for i in dataColumns%}
+								<option value="{{i}}">{{i}}</option>
+							{%endfor%}
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<button type="submit" class="btn btn-primary" style="width: 30%;">Submit</button>				
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<div class="shadow p-3 mb-5 bg-white rounded" style="margin: auto;">
+		<h2>Choose Model</h2>
+		<p>
+			This option is to choose one of the many models that has been implemented with integrated differential privacy. Currently, the below models have been implemented:
+			<ul>
+				<li>Gaussian Naive Bayes Model</li>
+				<li>Logistic Regression</li>
+				<li>Linear Regression</li>
+			</ul> 
+			This includes both classification models a well as regression models. <strong>It is the responsibility of the user to choose the appropriate model, keeping the uploaded dataset in mind</strong>
+		</p>
+	</div>
+
+	<div class="shadow p-3 mb-5 bg-white rounded" style="margin: auto;">
+		<h2>Choose target column</h2>
+		<p>
+			This option can be used to set the dependent or the Y - column involved in the process of training models.
+		</p>
+	</div>
+
+{% endblock %}
